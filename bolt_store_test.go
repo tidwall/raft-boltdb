@@ -42,6 +42,9 @@ func TestBoltStore_Implements(t *testing.T) {
 	if _, ok := store.(raft.LogStore); !ok {
 		t.Fatalf("BoltStore does not implement raft.LogStore")
 	}
+	if _, ok := store.(raft.PeerStore); !ok {
+		t.Fatalf("BoltStore does not implement raft.PeerStore")
+	}
 }
 
 func TestNewBoltStore(t *testing.T) {
