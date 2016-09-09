@@ -88,6 +88,33 @@ func TestNewBoltStore(t *testing.T) {
 	}
 }
 
+func TestBoltStore_Peers(t *testing.T) {
+	store := testBoltStore(t)
+	defer store.Close()
+	defer os.Remove(store.path)
+	peers, err := store.Peers()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(peers) != 0 {
+		t.Fatalf("expected '%v', got '%v'", 0, len(peers))
+	}
+	v := []string{"1", "2", "3"}
+	if err := store.SetPeers(v); err != nil {
+		t.Fatal(err)
+	}
+	peers, err = store.Peers()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(peers) != 3 {
+		t.Fatalf("expected '%v', got '%v'", 3, len(peers))
+	}
+	if peers[0] != "1" || peers[1] != "2" || peers[2] != "3" {
+		t.Fatalf("expected %v, got %v", v, peers)
+	}
+}
+
 func TestBoltStore_FirstIndex(t *testing.T) {
 	store := testBoltStore(t)
 	defer store.Close()
