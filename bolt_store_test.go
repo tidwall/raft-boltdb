@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/boltdb/bolt"
-	"github.com/hashicorp/raft"
+	"github.com/tidwall/raft"
 )
 
 func testBoltStore(t testing.TB) *BoltStore {
